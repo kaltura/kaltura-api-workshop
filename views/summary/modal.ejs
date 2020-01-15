@@ -1,0 +1,22 @@
+<div class="popup-modal shadow" data-popup-modal="one">
+    <h1 class="font-weight-bold">
+        <%= error %>
+
+    </h1>
+    <div><img src="images/cat.gif" style="height:200px" /></div>
+    <% if (goBack) { %>
+        <div>
+            <input class="buttonBg" type="button" value="Back to list" onclick="history.back()"/>
+        </div>
+    <% } %>
+</div>
+<script type="text/javascript">
+    if ("<%= error %>".indexOf("being processed") > -1) {
+        // videos not ready yet refresh page in 10 sec
+        setTimeout(function () {
+            // TODO - go through router?
+            location.reload();
+        }, 10000)
+    }
+</script>
+

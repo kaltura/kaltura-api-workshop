@@ -1,0 +1,98 @@
+.spinnerContainer{
+    display: flex;
+    justify-content: center; /* center items horizontally, in this case */
+}
+@keyframes kaltura-spinner {
+    0% {
+        transform: rotate(0deg) scale(0.7);
+        opacity: 1;
+    }
+    70% {
+        transform: rotate(360deg) scale(0.7);
+        opacity: 1;
+    }
+    82% {
+        transform: rotate(360deg) scale(0);
+        opacity: 0;
+    }
+    87% {
+        transform: rotate(360deg) scale(0.9);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(360deg) scale(0.7);
+        opacity: 1;
+    }
+}
+.loading-backdrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: 100ms opacity;
+    opacity: 0;
+    z-index: 5;
+}
+.loading-backdrop.show {
+    opacity: 1;
+}
+.loading-backdrop.show .spinner-container {
+    display: block;
+}
+.loading-backdrop .spinner-container {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50px, -50px, 0);
+}
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: kaltura-spinner 2.5s infinite;
+}
+.spinner span {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    display: block;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -4px;
+    margin-left: -4px;
+}
+.spinner span:nth-child(1) {
+    transform: rotate(45deg) translateX(-25px) translateY(-25px);
+    background-color: #da1f26;
+}
+.spinner span:nth-child(2) {
+    transform: rotate(90deg) translateX(-25px) translateY(-25px);
+    background-color: #06a885;
+}
+.spinner span:nth-child(3) {
+    transform: rotate(135deg) translateX(-25px) translateY(-25px);
+    background-color: #009344;
+}
+.spinner span:nth-child(4) {
+    transform: rotate(180deg) translateX(-25px) translateY(-25px);
+    background-color: #f8a61a;
+}
+.spinner span:nth-child(5) {
+    transform: rotate(225deg) translateX(-25px) translateY(-25px);
+    background-color: #1b4a97;
+}
+.spinner span:nth-child(6) {
+    transform: rotate(270deg) translateX(-25px) translateY(-25px);
+    background-color: #00abcc;
+}
+.spinner span:nth-child(7) {
+    transform: rotate(315deg) translateX(-25px) translateY(-25px);
+    background-color: #b1d238;
+}
+.spinner span:nth-child(8) {
+    transform: rotate(360deg) translateX(-25px) translateY(-25px);
+    background-color: #fcd203;
+}

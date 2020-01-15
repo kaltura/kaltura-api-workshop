@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'LCDBold';
+  src: url('../fonts/lcd-bold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/roboto-regular.ttf');
+}
+
+body {
+  background-color: #32326B;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: gray;
+}
+
+a {
+  color:white;
+  text-decoration: underline;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.connect-challenges__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 0;
+  margin-top: 27px;
+  min-height: 4rem;
+  padding: 0 68px;
+}
+
+.connect-challenges__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px 0;
+  flex-grow: 1;
+  overflow: auto;
+  padding: 0 68px;
+}
+
+
+.logo {
+  height: 64px;
+  object-fit: contain;
+}
+
+.connect-challenges__header--inner {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}

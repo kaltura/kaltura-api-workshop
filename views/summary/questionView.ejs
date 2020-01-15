@@ -1,0 +1,18 @@
+<div>
+    <div class="blog-card">
+        <div class="meta">
+            <div class="photo" style="background-image: url(<%= question.image %>)"></div>
+            <ul class="details">
+                <li class="date"><%= question.createdAt %></li>
+            </ul>
+        </div>
+        <div class="description">
+            <h5><%= question.name %></h5>
+            <!--        <h2>Opening a door to the future</h2>-->
+<!--            <p> <%= question.description %>.</p>-->
+            <p class="read-more">
+                <a href="#" onclick="player.loadMedia({entryId: '<%= question.id %>'})">Play</a>
+            </p>
+        </div>
+    </div>
+</div>

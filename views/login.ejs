@@ -1,0 +1,31 @@
+<% include partials/header %>
+<script>
+    function handleSubmit() {
+      $('#submitBtn').val('Please wait').prop("disabled", true);
+    }
+</script>
+<link rel='stylesheet' href='/stylesheets/login.css'/>
+<div class="root">
+<div class="container">
+    <div class="title">Please Provide Your Agent Credentials</div>
+    <div class="item">
+        <form onsubmit="handleSubmit()"  method="post" class="form form-login">
+            <div class="form-field">
+                <label class="user" for="login-name"><span class="hidden">Agent Name</span></label>
+                <input name="name" autofocus id="login-name" type="text" class="form-input" placeholder="Name" required>
+            </div>
+            <div class="form-field">
+                <label class="lock" for="login-email"><span class="hidden">Agent Email</span></label>
+                <input name="email" id="login-email" type="email" class="form-input" placeholder="Email" required>
+            </div>
+            <div class="form-field">
+                <input id="submitBtn"  type="submit" value="Log in">
+            </div>
+          <div class="form-field">
+              <div class="form-error"><%= errorMessage %></div>
+          </div>
+        </form>
+    </div>
+</div>
+</div>
+<% include partials/footer %>

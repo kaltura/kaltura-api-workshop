@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+<link rel='stylesheet' href='/stylesheets/summary.css'/>
+<link rel='stylesheet' href='/stylesheets/spinner.css'/>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'/>
+<% if (error) { %>
+    <div class="blackout"></div>
+    <%- include('summary/modal', {error: error, goBack: goBack}) %>
+<% } %>
+<div class="summary-container">
+    <div class="container">
+        <header>
+            <% if (goBack && !error) { %>
+                <input class="buttonBg" type="button" value="Back to list" onclick="history.back()"/>
+            <% } %>
+            <h1>Interview Summary</h1>
+        </header>
+
+        <div>
+            <%- include('summary/questionsView', {questions: questions}) %>
+        </div>
+
+        <main class="playerWrapper">
+            <div id="playerContainer" style="width: 480px;height: 270px"></div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnapisec.kaltura.com/p/2643121/embedPlaykitJs/uiconf_id/44922451"></script>
+<% if (!error) { %>
+    <script type="text/javascript">
+        try {
+            var player = KalturaPlayer.setup({
+                targetId: "playerContainer",
+                provider: {
+                    partnerId: 2643121,
+                    uiConfId: 44922451
+                }
+            });
+            player.loadMedia({entryId: '<%= questions[0].id %>'});
+        } catch (e) {
+            console.error(e.message)
+        }
+    </script>
+<% } %>
+<%- include('partials/footer') %>

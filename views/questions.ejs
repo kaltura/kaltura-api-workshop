@@ -1,0 +1,181 @@
+<% include partials/header %>
+
+<script src="https://www.kaltura.com/apps/expressrecorder/latest/express-recorder.js"></script>
+<script>
+  function handleSubmit() {
+    $('#continueButton').val('Please wait').prop("disabled", true);
+  }
+</script>
+<script>
+    const ks = '<%= ks %>';
+    const partnerId = <%= partnerId %>;
+    const playerId = <%= playerId %>;
+</script>
+
+<link rel='stylesheet' href='/stylesheets/questions.css'/>
+
+
+<script>
+    window.KApps = window.KApps || {};
+    window.transportError = function (err) {
+        console.log("transport error");
+        console.log(err);
+    }
+    KApps.expressRecorderHandler = {
+        instance: null, // populated when instantiating the recorder
+        cancelled: false, // media upload cancelled?
+        uploading: false, // currently uploading media?
+        appTransportErrorHandler: window.transportError,
+        suppressErrors: false, // fixes the case of upload cancelled and a new recording starts right away, where the call to post-record/publish fails on missing entry id
+        bytesToSize: function (bytes) {
+            var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+            if (bytes === 0) {
+                return "0 Bytes";
+            }
+            var i = Math.floor(Math.log(bytes) / Math.log(1024));
+            if (i === 0) {
+                return bytes + " " + sizes[i];
+            }
+            return (bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i];
+        },
+        transportErrorHandler: function (data) {
+            if (!KApps.expressRecorderHandler.suppressErrors) {
+                KApps.expressRecorderHandler.appTransportErrorHandler(data);
+            }
+        },
+        /**
+         * called whenever the user has canceled the upload
+         */
+        setCanceled: function (cancelled) {
+            KApps.expressRecorderHandler.cancelled = cancelled;
+            if (cancelled) {
+                console.log("canceled flag set");
+                KApps.expressRecorderHandler.suppressErrors = true;
+            }
+        },
+
+        uploadProgressHandler: function (event) {
+            var loaded = event.detail.loaded;
+            var total = event.detail.total;
+            var percent = Math.floor(loaded / total * 100);
+            console.log("upload progressing at " + percent + "%");
+            var loadedStr =
+                KApps.expressRecorderHandler.bytesToSize(loaded) +
+                " / " +
+                KApps.expressRecorderHandler.bytesToSize(total);
+            console.log("loaded " + loadedStr);
+        },
+
+        uploadCancelHandler: function (e) {
+            // make the progress red
+            console.log("upload canceled");
+            KApps.expressRecorderHandler.setCanceled(true);
+            KApps.expressRecorderHandler.uploading = false;
+        },
+
+        uploadDoneHandler: function (e) {
+            KApps.expressRecorderHandler.uploading = false;
+            console.log("upload done, going to destroy instance");
+            // KApps.expressRecorderHandler.instance.destroy();
+            $("#question-form").show();
+            $("#recorder").hide();
+            $("#question").hide();
+            $("#entryId").val(e.detail.entryId);
+            setTimeout(function () {
+              $("#question-form").submit();
+            });
+        },
+
+        uploadStartHandler: function (e) {
+            KApps.expressRecorderHandler.uploading = true;
+            KApps.expressRecorderHandler.suppressErrors = false;
+            console.log("upload started");
+            var entryId = e.detail.entryId;
+            console.log("entry ID created " + entryId);
+        },
+
+        cancelUpload: function () {
+            if (KApps.expressRecorderHandler.instance) {
+                KApps.expressRecorderHandler.instance.cancelUpload();
+            }
+        },
+
+        handleRecordingEnded: function () {
+            console.log("recording ended");
+        },
+
+        downloadCopy: function () {
+            if (KApps.expressRecorderHandler.instance) {
+                KApps.expressRecorderHandler.instance.saveCopy();
+            }
+        },
+
+        recordAgain: function () {
+            // hide actions
+            console.log("restarting record");
+            if (KApps.expressRecorderHandler.instance) {
+                KApps.expressRecorderHandler.instance.startRecording();
+            }
+        },
+
+        uploadCurrent: function () {
+            // hide actions
+            $(".actions").addClass("hidden");
+            if (KApps.expressRecorderHandler.instance) {
+                KApps.expressRecorderHandler.instance.upload();
+            }
+        },
+
+        /**
+         * after upload cancel
+         */
+        resetPage: function () {
+            console.log("resetting page UI changes and this class state");
+            KApps.expressRecorderHandler.setCanceled(false);
+            KApps.expressRecorderHandler.uploading = false;
+        }
+    };
+
+    window.transportError = KApps.expressRecorderHandler.transportErrorHandler;
+
+</script>
+<h2 id="question">Question <%= questionId %>: <%= questionContent %></h2>
+<div class="recorder" id="recorder">
+    <script type="text/javascript">
+        var component = Kaltura.ExpressRecorder.create('recorder', {
+                "ks": ks,
+                "serviceUrl": "https://www.kaltura.com",
+                "app": "my_app",
+                "playerUrl": "https://cdnapisec.kaltura.com",
+                "conversionProfileId": null,
+                "partnerId": partnerId,
+                "entryName": "<%= questionContent %>",
+                "uiConfId": playerId,
+                "browserNotSupportedText": "Your browser is not supported. Please use a modern browser",
+                "maxRecordingTime": "You have reached max allowed recording time",
+                "showUploadUI":
+                    true
+            })
+        ;
+        component.instance.addEventListener("mediaUploadProgress", KApps.expressRecorderHandler.uploadProgressHandler);
+        component.instance.addEventListener("mediaUploadCancelled", KApps.expressRecorderHandler.uploadCancelHandler);
+        component.instance.addEventListener("mediaUploadEnded", KApps.expressRecorderHandler.uploadDoneHandler);
+        component.instance.addEventListener("mediaUploadStarted", KApps.expressRecorderHandler.uploadStartHandler);
+        component.instance.addEventListener("recordingEnded", KApps.expressRecorderHandler.handleRecordingEnded);
+        KApps.expressRecorderHandler.instance = component.instance;
+    </script>
+</div>
+
+<form onsubmit="handleSubmit()" id="question-form" method="post">
+    <input name="questionId" type="hidden" value="<%= questionId %>"/>
+    <input id="entryId" name="entryId" type="hidden" value=""/>
+    <h3>Thank you for submitting your answer!</h3>
+    <h3>Please wait...</h3>
+<!--    <input id="continueButton" type="submit" value="Continue"/>-->
+</form>
+
+<script>
+    $("#question-form").hide();
+</script>
+
+<% include partials/footer %>

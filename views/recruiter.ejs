@@ -1,0 +1,38 @@
+<% include partials/header %>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link rel='stylesheet' href='/stylesheets/recruiter.css'/>
+
+<div id="playlists-container">
+    <table id="myTable" style="width:100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%- include('recruiter/playlistsView.ejs', {playlists: playlists.objects}) %>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                nRow.addEventListener('mouseenter', () => {
+                    nRow.classList.add('highlight');
+                });
+                nRow.addEventListener('mouseleave', () => {
+                    nRow.classList.remove('highlight');
+                });
+                nRow.addEventListener('click', () => {
+                    location.assign(`/summary?playlistId=${aData[0]}`);
+                }, false);
+            }
+        });
+    });
+</script>
+<% include partials/footer %>

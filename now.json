@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "agents",
+  "scope": "kaltura",
+  "builds": [
+    {
+      "src": "bin/www",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+      },
+      "src": "/.*",
+      "dest": "/bin/www"
+    }
+  ],
+  "env": {
+    "ADMIN_SECRET": "@connect_admin_secret",
+    "PARTNER_ID": "@connect_partner_id",
+    "PLAYER_ID": "@connect_player_id",
+    "SESSION_SECRET": "@connect_session_secret",
+    "KS_TYPE": "@connect_ks_type"
+  }
+}
