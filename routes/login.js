@@ -24,8 +24,17 @@ function getUser(client,userId) {
       for success: resolve null
       for not success: resolve response
      */
-    reject({message: 'pending implementation (Task 2.1)'});
-
+    kaltura.services.user.get(userId)
+      .completion((success, response) => {
+        if (!success) {
+          console.log("User doesn't exist");
+          resolve(null);
+        } else {
+          console.log("User Exists");
+          resolve(response);
+        }
+      })
+      .execute(client);
   });
 }
 
@@ -42,7 +51,21 @@ function createUser(client, name, userId) {
       for success: resolve response
       for not success: reject response
      */
-    reject({message: 'pending implementation (Task 2.2)'});
+
+    let user = new kaltura.objects.User();
+    user.firstName = name;
+    user.id = userId;
+    kaltura.services.user.add(user)
+      .completion((success, response) => {
+        if (success) {
+          console.log("User Created");
+          resolve(response);
+        } else {
+          console.log("Could not create user");
+          reject(response.message);
+        }
+      })
+      .execute(client)
   });
 }
 

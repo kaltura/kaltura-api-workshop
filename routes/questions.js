@@ -21,7 +21,7 @@ function createPlaylist(client, name) {
       -----
       you should create playlist with type kaltura.enums.PlaylistType.STATIC_LIST
      */
-
+    
       reject({message: 'pending implementation'});
 
   });
