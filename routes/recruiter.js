@@ -16,7 +16,15 @@ function getPlaylists(client) {
         for success: resolve response
         for not success: reject response
        */
-        reject('pending implementation');
+
+        let filter = new kaltura.objects.PlaylistFilter();
+        filter.orderBy = kaltura.enums.PlaylistOrderBy.CREATED_AT_DESC;
+        let pager = new kaltura.objects.FilterPager();
+        kaltura.services.playlist.listAction(filter, pager)
+            .execute(client)
+            .then(response => {
+                resolve(response);
+            });
     });
 }
 
