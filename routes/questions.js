@@ -48,7 +48,12 @@ function getPlaylist(client, playlistId) {
       for success: resolve response
       for not success: reject response
      */
-    reject('pending implementation');
+    let id = playlistId;
+    kaltura.services.playlist.get(id)
+      .execute(client)
+      .then(response => {
+        resolve(response);
+      });
   });
 }
 
@@ -72,7 +77,14 @@ function addEntryToPlaylist(client, playlist, entryId) {
       to set playlistContent property in the request, you should concat the new entry with comma separation.
       meaning, if the playlist contains entries, concat the new entry; otherwise add the entry id as is
      */
-      reject('pending implementation');
+
+    let updatedPlaylist = new kaltura.objects.Playlist();
+    updatedPlaylist.playlistContent = (playlist.playlistContent ? playlist.playlistContent + ',' : '') + entryId;
+    kaltura.services.playlist.update(id, updatedPlaylist)
+      .execute(client)
+      .then(response => {
+        resolve(response);
+      });
   });
 }
 
