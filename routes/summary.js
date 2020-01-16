@@ -42,7 +42,7 @@ function getEntriesStatus(client, entryList) {
     desired statusIn values:
       kaltura.enums.EntryStatus.READY
       kaltura.enums.EntryStatus.PENDING
-      kaltura.enums.EntryStatus.PRECONVER
+      kaltura.enums.EntryStatus.PRECONVERT
    */
     reject('pending implementation');
   })
