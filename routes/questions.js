@@ -21,9 +21,16 @@ function createPlaylist(client, name) {
       -----
       you should create playlist with type kaltura.enums.PlaylistType.STATIC_LIST
      */
-    
-      reject({message: 'pending implementation'});
+    let playlist = new kaltura.objects.Playlist();
+    playlist.name = name;
+    playlist.playlistType = kaltura.enums.PlaylistType.STATIC_LIST;
+    let updateStats = false;
 
+    kaltura.services.playlist.add(playlist, updateStats)
+      .execute(client)
+      .then(response => {
+        resolve(response);
+      });
   });
 }
 
@@ -78,14 +85,10 @@ router.get('/', async (req, res, next) => {
   const {PLAYER_ID: playerId , PARTNER_ID: partnerId} = process.env;
 
   if (currentQuestion === 0) {
-    try {
-      var userClient = await KalturaClientFactory.getClient(ks);
-      var playList = await createPlaylist(userClient, req.session.agentName);
-      console.log(`created new playlist with id ${playList.id}`);
-      req.session.playlistId = playList.id;
-    }catch (e) {
-      res.render('error', { message: e.message, error: { status: 500, stack: ''}});
-    }
+    var userClient = await KalturaClientFactory.getClient(ks);
+    var playList = await createPlaylist(userClient, req.session.agentName);
+    console.log(`created new playlist with id ${playList.id}`);
+    req.session.playlistId = playList.id;
   }
 
 
