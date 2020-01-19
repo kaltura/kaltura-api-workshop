@@ -29,3 +29,14 @@
     padding: 5px 0;
     display: block;
 }
+@media (max-width: 1299px) {
+    .gallery-container {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 1014px) {
+    .gallery-container {
+        max-width: 95%;
+    }
+}
