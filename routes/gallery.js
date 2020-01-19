@@ -7,7 +7,7 @@ var KalturaClientFactory = require("../lib/kalturaClientFactory");
 function getPlaylists(client) {
     return new Promise((resolve, reject) => {
         let filter = new kaltura.objects.PlaylistFilter();
-        filter.orderBy = kaltura.enums.PlaylistOrderBy.CREATED_AT_ASC;
+        filter.orderBy = kaltura.enums.PlaylistOrderBy.UPDATED_AT_ASC;
         let pager = new kaltura.objects.FilterPager();
         pager.pageSize = 500;
         kaltura.services.playlist
