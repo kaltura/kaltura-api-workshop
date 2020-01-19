@@ -25,6 +25,10 @@
 }
 
 .playlist__name {
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #a3fd4f;
     padding: 5px 0;
     display: block;
