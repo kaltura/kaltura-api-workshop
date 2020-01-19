@@ -4,6 +4,11 @@
 <div class="gallery-container">
     <%- include('gallery/playlists.ejs', {playlists: playlists}) %>
 </div>
+<script>
+    setTimeout(function () {
+        location.reload();
+    }, 1E4);
+</script>
 
 <% include partials/footer %>
 
