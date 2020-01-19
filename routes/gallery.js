@@ -22,11 +22,11 @@ function getPlaylists(client) {
 router.get("/", async (req, res, next) => {
     var ks = await KalturaClientFactory.getKS("", { type: kaltura.enums.SessionType.ADMIN });
     var client = await KalturaClientFactory.getClient(ks);
-    var playlists = await getPlaylists(client);
-    playlists = playlists.objects.filter(playlist => playlist.playlistContent);
-    playlists = R.uniqWith((a, b) => {
-        return a.userId === b.userId;
-    }, playlists);
+    var filterPlaylists = R.compose(
+        R.uniqWith((a, b) => a.userId === b.userId),
+        R.filter(R.prop("playlistContent"))
+    );
+    var playlists = filterPlaylists((await getPlaylists(client)).objects);
     res.render("gallery", { playlists });
 });
 
