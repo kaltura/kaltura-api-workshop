@@ -1,4 +1,4 @@
 <a class="playlist" href="/summary?playlistId=<%= playlist.id %>">
-    <img alt="<%= playlist.name %>" class="playlist__image" src="<%= playlist.thumbnailUrl%>/width/200/height/113">
+    <img alt="<%= playlist.name %>" class="playlist__image" onload="this.style.visibility = 'visible'" src="<%= playlist.thumbnailUrl%>/width/200/height/113">
     <span class="playlist__name"><%= playlist.name %></span>
 </a>
