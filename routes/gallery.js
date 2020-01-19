@@ -6,18 +6,6 @@ var KalturaClientFactory = require("../lib/kalturaClientFactory");
 
 function getPlaylists(client) {
     return new Promise((resolve, reject) => {
-        /*
-          Task 6
-          ======
-          get all playlists
-
-          Information:
-          ------
-          available arguments:
-          for success: resolve response
-          for not success: reject response
-         */
-
         let filter = new kaltura.objects.PlaylistFilter();
         filter.orderBy = kaltura.enums.PlaylistOrderBy.CREATED_AT_ASC;
         let pager = new kaltura.objects.FilterPager();
