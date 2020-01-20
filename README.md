@@ -61,8 +61,6 @@ This call should return a user record if the email address of an existing candid
 Assuming a user does not exist for the give email address, this call creates a new Kaltura User record. It requires the name and email address inputted at login. 
 > Hint: if you're not sure about the correct syntax, be sure to populate the desired fields while in the console, and copy paste the sample code. 
 
- in our workshop we create a playlist for a given user per session (not per user). we then use the ssesion to store the playlist id and use the same one for all questions. but once the user complete answering all questions, if he will get back to questions route we will re-create a new playlist. you wrote that we retrieve the playlist for existing user but it actually per session....
-
 ### Task 3
 #### Create Playlist 
 
