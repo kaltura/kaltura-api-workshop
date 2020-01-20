@@ -64,7 +64,9 @@ Assuming a user does not exist for the give email address, this call creates a n
 ### Task 3
 #### Create Playlist 
 
-A playlist is created for the given user, per session, after login, using the user's name. The session is used to store the playlistId so that the same playlist is retrieved for following questions and used for all recordings *in that session.* However, given a new session, a new playlist will be created. This session is created with the user KS (which contains the user email address), making it easier to find later. 
+A playlist is created for the given user, per session, right after login. The playlist is created using the User KS, which contains the email address, thereby associating the playlist with that user. The playlistId  of the new playlist is stored in the session so that the same playlist is used for questions that haven't been recorded yet *in that session.* A new playlist is created if all questions have been recorded, or if the session has ended (by going to the login page). 
+
+This is done so that the same email address can be used in each test; obviously in a real setting, a candidate would be prevented from answering the same questions again. 
 
 ### Task 4.1
 #### Get playlist 
