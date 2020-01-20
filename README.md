@@ -18,6 +18,9 @@ This application makes calls to the Kaltura API, which requires an authenticatio
 
 **See the `env.template` file. Please create a copy of this file named `.env`, and populate it with the Kaltura credentials given.**
 
+### questions-data.js 
+For the purpose of this workshop, candidate questions are stored statically in `questions-data.js`, while they would typically reside in some sort of database. We initiated the application with two questions, but feel free to edit them or add more questions. 
+
 ## How Do I Build This Application?
 
 ### Tasks 
@@ -58,10 +61,12 @@ This call should return a user record if the email address of an existing candid
 Assuming a user does not exist for the give email address, this call creates a new Kaltura User record. It requires the name and email address inputted at login. 
 > Hint: if you're not sure about the correct syntax, be sure to populate the desired fields while in the console, and copy paste the sample code. 
 
+ in our workshop we create a playlist for a given user per session (not per user). we then use the ssesion to store the playlist id and use the same one for all questions. but once the user complete answering all questions, if he will get back to questions route we will re-create a new playlist. you wrote that we retrieve the playlist for existing user but it actually per session....
+
 ### Task 3
 #### Create Playlist 
 
-A playlist is created with the user's name after login. For an existing user, the playlist is retrieved. Because the playlist is created using the user KS, that playlist is registered under that email address, making it easier to find later. 
+A playlist is created for the given user, per session, after login, using the user's name. The session is used to store the playlistId so that the same playlist is retrieved for following questions and used for all recordings *in that session.* However, given a new session, a new playlist will be created. This session is created with the user KS (which contains the user email address), making it easier to find later. 
 
 ### Task 4.1
 #### Get playlist 
@@ -78,7 +83,7 @@ However, if there are already entries in the playlist, the new entry ID must be 
 ### Task 5.1 
 #### Get Playlist 
 
-Retrieve the playlist for playback, using the provided entryId 
+Retrieve the playlist for playback, using the provided playlist ID  
 
 ### Task 5.2 
 #### Get Playlist Entry Status 
@@ -97,8 +102,7 @@ The execute action essentially returns all data needed to show a playlist. It re
 ### Task 6  
 #### Recruiter: Get All Playlists 
 
-The final page in the interview flow shows all candidate playlists and allows basic searching by name. This requires retrieving all playlists. Sorting by descending create date is advised.
-> Reminder that all list actions require a pager. 
+The final page in the interview flow shows all candidate playlists and allows basic searching by name. In a real scenario, the filtering and pagination would be done against the server, but for the purpose of this workshop we are fetching all the relevant playlists and manipulating/searching through them on the client side. In that case, you'll need to retrieve all playlists from the API - and sort by descending create time. Reminder that all list actions require a pager. 
 
 ## Conclusion 
 
