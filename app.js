@@ -10,6 +10,7 @@ var loginRouter = require('./routes/login');
 var recruiterRouter = require('./routes/recruiter.js');
 var questionsRouter = require('./routes/questions.js');
 var summaryRouter = require('./routes/summary');
+var galleryRouter = require('./routes/gallery');
 
 var cookieSession = require('cookie-session');
 
@@ -87,6 +88,7 @@ app.use(function(req, res, next) {
 app.use('/recruiter', recruiterRouter);
 app.use('/questions', questionsRouter);
 app.use('/summary', summaryRouter);
+app.use('/gallery', galleryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

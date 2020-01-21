@@ -102,7 +102,9 @@ router.get('/', async function(req, res, next) {
     let questions = [];
     let ks = req.session.ks;
     let referrer = req.get('Referrer') || '';
-    let goBack = referrer.includes('recruiter') && req.query.playlistId != null;
+    let goBack =
+        (referrer.includes("recruiter") || referrer.includes("gallery")) &&
+        req.query.playlistId != null;
     let playlistId = req.query.playlistId || req.session.playlistId;
     if (ks && playlistId) {
 

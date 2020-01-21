@@ -6,6 +6,11 @@
 
 }
 
+.app-body {
+  display: flex;
+  flex-direction: column;
+}
+
 .paginate_button,
 .dataTables_info,
 .dataTables_wrapper .dataTables_length,
