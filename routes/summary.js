@@ -19,7 +19,14 @@ function getPlaylist(client, id) {
        for success: resolve response
        for not success: reject response
       */
-      reject('pending implementation');
+
+        kaltura.services.playlist.get(id, version)
+            .execute(client)
+            .then(response => {
+                resolve(response);
+            }).catch(e => {
+                reject(e);
+        });
     });
 }
 
@@ -44,7 +51,22 @@ function getEntriesStatus(client, entryList) {
       kaltura.enums.EntryStatus.PENDING
       kaltura.enums.EntryStatus.PRECONVERT
    */
-    reject('pending implementation');
+    let filter = new kaltura.objects.BaseEntryFilter();
+    filter.idIn = entryList;
+    filter.statusIn = [
+      kaltura.enums.EntryStatus.READY,
+      kaltura.enums.EntryStatus.PENDING,
+      kaltura.enums.EntryStatus.PRECONVERT
+    ].join(',');
+    let pager = new kaltura.objects.FilterPager();
+
+    kaltura.services.baseEntry.listAction(filter, pager)
+      .execute(client)
+      .then(response => {
+        resolve(response);
+      }).catch(e => {
+      reject(e)
+    });
   })
 }
 
@@ -64,7 +86,15 @@ function executePlaylist(client, id) {
         for success: resolve response
         for not success: reject response
        */
-        reject('pending implementation');
+        let filter = new kaltura.objects.MediaEntryFilterForPlaylist();
+        let pager = new kaltura.objects.FilterPager();
+        kaltura.services.playlist.execute(id, detailed, playlistContext, filter, pager)
+            .execute(client)
+            .then(response => {
+                resolve(response);
+            }).catch(e => {
+                reject(e)
+            });
     });
 }
 
