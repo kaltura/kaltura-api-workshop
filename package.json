@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.22"
   },
   "nodemonConfig": {
     "ext": "js,ejs,css",
